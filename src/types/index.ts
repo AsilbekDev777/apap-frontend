@@ -18,8 +18,9 @@ export interface Student {
     lastName: string;
     studentNumber: string;
     groupId: string;
-    group?: Group;
     userId: string;
+    group?: Group;
+    user?: { email: string };
 }
 
 export interface Group {
