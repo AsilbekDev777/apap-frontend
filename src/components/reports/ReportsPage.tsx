@@ -49,14 +49,13 @@ export default function ReportsPage() {
     const [loading, setLoading] = useState(true);
     const [createOpen, setCreateOpen] = useState(false);
     const [downloading, setDownloading] = useState<string | null>(null);
-    const pollingRef = useRef<NodeJS.Timeout | null>(null);
+    const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     const loadReports = useCallback(async () => {
         try {
             const data = await reportsApi.getAll();
             setReports(data);
 
-            // Pending/processing bo'lsa — polling
             const hasPending = data.some(
                 (r) => r.status === 'pending' || r.status === 'processing',
             );
@@ -101,7 +100,6 @@ export default function ReportsPage() {
 
     return (
         <Box>
-            {/* Header */}
             <Box
                 sx={{
                     display: 'flex',
@@ -143,7 +141,6 @@ export default function ReportsPage() {
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-
                         <TableBody>
                             {loading ? (
                                 <TableRow>
