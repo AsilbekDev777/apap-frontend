@@ -10,6 +10,8 @@ export interface User {
     email: string;
     role: UserRole;
     lang: 'uz' | 'ru';
+    isActive: boolean;
+    lastLogin?: string;
 }
 
 export interface Student {
