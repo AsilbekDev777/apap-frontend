@@ -1,36 +1,219 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# APAP Frontend
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)
+![MUI](https://img.shields.io/badge/MUI-9-007FFF?style=for-the-badge&logo=mui)
+![Zustand](https://img.shields.io/badge/Zustand-latest-orange?style=for-the-badge)
+
+**Academic Performance Analytics Platform — Web Interface**
+
+[Production](https://apap-frontend.vercel.app) · [Backend API](https://apap-backend.onrender.com/v1)
+
+</div>
+
+---
+
+## Loyiha haqida
+
+APAP Frontend — universitetlar uchun akademik ko'rsatkichlar boshqaruv tizimining web interfeysi. Next.js 15 App Router, Material UI v9 va Zustand asosida qurilgan. 4 ta rol uchun alohida dashboard: Admin, O'qituvchi, Talaba va Ota-ona.
+
+## Texnologiyalar
+
+| Texnologiya | Versiya | Maqsad |
+|-------------|---------|--------|
+| Next.js | 15 | React framework (App Router) |
+| TypeScript | 5 | Dasturlash tili |
+| Material UI | 9 | UI komponent kutubxonasi |
+| Zustand | latest | State management |
+| Axios | latest | HTTP client |
+| React Hook Form | latest | Form boshqaruvi |
+| Zod | latest | Validatsiya |
+| js-cookie | latest | Cookie boshqaruvi |
+| jwt-decode | latest | JWT token decode |
+
+## Loyiha strukturasi
+
+```
+src/
+├── app/
+│   ├── (auth)/
+│   │   └── login/          # Login sahifasi
+│   └── (dashboard)/
+│       ├── admin/           # Admin sahifalari
+│       │   ├── dashboard/
+│       │   ├── students/
+│       │   ├── grades/
+│       │   ├── attendance/
+│       │   ├── reports/
+│       │   ├── faculties/
+│       │   ├── groups/
+│       │   ├── courses/
+│       │   ├── semesters/
+│       │   ├── users/
+│       │   └── audit/
+│       ├── teacher/         # O'qituvchi sahifalari
+│       │   ├── dashboard/
+│       │   ├── students/
+│       │   ├── grades/
+│       │   ├── attendance/
+│       │   └── reports/
+│       ├── student/         # Talaba sahifalari
+│       │   ├── dashboard/
+│       │   ├── grades/
+│       │   ├── attendance/
+│       │   └── reports/
+│       └── parent/          # Ota-ona sahifalari
+│           ├── dashboard/
+│           ├── grades/
+│           └── attendance/
+├── components/
+│   ├── layout/              # Sidebar, Header, Notifications
+│   ├── ui/                  # PageHeader, ConfirmDialog
+│   ├── students/            # Student modallari
+│   ├── grades/              # GPA card, Grade modallari
+│   ├── attendance/          # Attendance modallari
+│   └── reports/             # Reports komponentlari
+├── lib/
+│   ├── api/                 # API client funksiyalar
+│   ├── theme.ts             # MUI tema
+│   └── navigation.ts        # Nav items konfiguratsiya
+├── store/
+│   ├── auth.store.ts        # Autentifikatsiya state
+│   └── notification.store.ts # Bildirishnomalar state
+├── types/
+│   └── index.ts             # TypeScript type definitionlar
+└── middleware.ts            # Route himoya
+```
+
+## Sahifalar
+
+### Admin
+| Sahifa | Yo'l | Tavsif |
+|--------|------|--------|
+| Dashboard | `/admin/dashboard` | Umumiy statistika |
+| Talabalar | `/admin/students` | CRUD + CSV import |
+| Baholar | `/admin/grades` | Baho kiritish + GPA |
+| Davomat | `/admin/attendance` | Bulk kiritish + statistika |
+| Reportlar | `/admin/reports` | PDF/Excel generatsiya |
+| Fakultetlar | `/admin/faculties` | CRUD |
+| Guruhlar | `/admin/groups` | CRUD |
+| Kurslar | `/admin/courses` | CRUD |
+| Semestrlar | `/admin/semesters` | CRUD + faollashtirish |
+| Foydalanuvchilar | `/admin/users` | CRUD + bloklash |
+| Audit log | `/admin/audit` | Tizim jurnali |
+
+### O'qituvchi
+| Sahifa | Yo'l | Tavsif |
+|--------|------|--------|
+| Dashboard | `/teacher/dashboard` | O'z kurslari |
+| Talabalar | `/teacher/students` | Guruh bo'yicha |
+| Baholar | `/teacher/grades` | Kiritish + GPA |
+| Davomat | `/teacher/attendance` | Bulk kiritish |
+| Reportlar | `/teacher/reports` | Yuklab olish |
+
+### Talaba
+| Sahifa | Yo'l | Tavsif |
+|--------|------|--------|
+| Dashboard | `/student/dashboard` | Profil + GPA |
+| Baholarim | `/student/grades` | Ko'rish |
+| Davomatim | `/student/attendance` | Statistika |
+| Reportlar | `/student/reports` | Yuklab olish |
+
+### Ota-ona
+| Sahifa | Yo'l | Tavsif |
+|--------|------|--------|
+| Dashboard | `/parent/dashboard` | Farzand ma'lumotlari |
+| Farzand baholar | `/parent/grades` | Ko'rish |
+| Farzand davomat | `/parent/attendance` | Statistika |
+
+## O'rnatish
+
+### Talablar
+
+- Node.js v20+
+- APAP Backend ishga tushirilgan bo'lishi kerak
+
+### 1. Repozitoriyani klonlash
+
+```bash
+git clone https://github.com/YOUR_USERNAME/apap-frontend.git
+cd apap-frontend
+```
+
+### 2. Dependensiyalarni o'rnatish
+
+```bash
+npm install
+```
+
+### 3. Environment sozlash
+
+`.env.local` fayl yarating:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000/v1
+NEXT_PUBLIC_WS_URL=http://localhost:3000
+```
+
+### 4. Serverni ishga tushirish
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Brauzerda `http://localhost:3001` ni oching.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Test akkauntlar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Rol | Email | Parol |
+|-----|-------|-------|
+| Admin | admin@apap.uz | Admin123! |
 
-## Learn More
+## Autentifikatsiya
 
-To learn more about Next.js, take a look at the following resources:
+JWT token cookie da saqlanadi:
+- **accessToken** — 15 daqiqa
+- **refreshToken** — 7 kun
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Token muddati tugaganda avtomatik yangilanadi (Axios interceptor orqali).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Middleware har so'rovda tokenni tekshiradi va rolga qarab yo'naltiradi:
 
-## Deploy on Vercel
+```
+/login → token yo'q → login sahifasi
+/admin/* → faqat admin roli
+/teacher/* → faqat teacher roli
+/student/* → faqat student roli
+/parent/* → faqat parent roli
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Vercel ga deploy
+
+1. GitHub reponi Vercel ga ulang
+2. Environment variables qo'shing:
+
+```env
+NEXT_PUBLIC_API_URL=https://apap-backend.onrender.com/v1
+NEXT_PUBLIC_WS_URL=https://apap-backend.onrender.com
+```
+
+3. Deploy tugmasini bosing
+
+`main` branchga har push qilinganda avtomatik deploy bo'ladi.
+
+## Skriptlar
+
+```bash
+npm run dev        # Development server (port 3001)
+npm run build      # Production build
+npm run start      # Production server
+npm run lint       # ESLint tekshiruv
+```
+
+## Litsenziya
+
+MIT
