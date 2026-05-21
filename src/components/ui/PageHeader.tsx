@@ -1,5 +1,5 @@
-import { Box, Typography, Button } from '@mui/material';
-import { Add } from '@mui/icons-material';
+import {Box, Typography, Button} from '@mui/material';
+import {Add} from '@mui/icons-material';
 
 interface Action {
     label: string;
@@ -9,11 +9,12 @@ interface Action {
 }
 
 interface Props {
-    title: string;
-    actions?: Action[];
+    title: string,
+    subtitle?: string
+    actions?: Action[],
 }
 
-export default function PageHeader({ title, actions = [] }: Props) {
+export default function PageHeader({title, actions = [], subtitle}: Props) {
     return (
         <Box
             sx={{
@@ -23,14 +24,14 @@ export default function PageHeader({ title, actions = [] }: Props) {
                 mb: 3,
             }}
         >
-            <Typography variant="h5" sx={{ fontWeight: 700 }}>
+            <Typography variant="h5" sx={{fontWeight: 700}}>
                 {title}
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{display: 'flex', gap: 1}}>
                 {actions.map((action, idx) => (
                     <Button
                         key={idx}
-                        startIcon={action.icon ?? <Add />}
+                        startIcon={action.icon ?? <Add/>}
                         variant={action.variant ?? 'contained'}
                         onClick={action.onClick}
                     >
